@@ -12,9 +12,9 @@ package com.ideas2it.exception;
  * @author Dinesh Rv
  * @since 08/11/2022
  */
-public class EmployeeNotFoundException extends Exception{
+public class NotFoundException extends Exception{
 
-    public EmployeeNotFoundException(String message) {
+    public NotFoundException(String message) {
         super(message);
     }
 }

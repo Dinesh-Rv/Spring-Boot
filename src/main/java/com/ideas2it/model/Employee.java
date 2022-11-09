@@ -1,10 +1,7 @@
 package com.ideas2it.model;
-import net.bytebuddy.implementation.bind.annotation.Default;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAnyAttribute;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +10,9 @@ import java.util.List;
  * <p> Contains every attribute common for all employee, doesn't contain
  * any input or output operations
  * </p>
+ *
+ * @author Dinesh Rv
+ * @since 8/11/2022
  */
 @Entity
 @Table(name = "employee")
@@ -45,7 +45,8 @@ public class Employee {
     @Column(name = "deleted")
     private int deleted=0;
 
-    @OneToMany(mappedBy = "employee")
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY ,mappedBy = "employee", cascade = CascadeType.ALL)
     private List<LeaveRecords> leaveRecords;
 
     @ManyToMany(mappedBy = "employee")
@@ -53,6 +54,7 @@ public class Employee {
 
     public Employee () {
     }
+
   
 
     public Employee(String employeeName, 
@@ -200,7 +202,7 @@ public class Employee {
     }
     @Override
     public String toString() {
-        String displayEmployeeDetail = "\nEmployee Id : "+ employeeId + "\nEmployee Role : " + employeeRole + 
+        String displayEmployeeDetail = "\nEmployee Id : "+ employeeId + "\nEmployee Role : " + employeeRole +
                                        "\nDepartment :" + employeeDepartment + "\nName : "+employeeName + 
                                        "\nDate of birth :" + employeeDateOfBirth + "\nPhone Number :" + employeePhoneNumber + 
                                        "\nEmail ID :" + employeeEmail + "\nGender : " + employeeGender + "\n";

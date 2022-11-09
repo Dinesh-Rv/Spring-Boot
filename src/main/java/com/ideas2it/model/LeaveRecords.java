@@ -1,5 +1,5 @@
 package com.ideas2it.model;
-import com.ideas2it.model.Employee;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -9,6 +9,9 @@ import javax.persistence.*;
  * <p> Contains every attribute for leave records for
  * an employee, doesn't contain any i/o operation
  * </p>
+ *
+ * @author Dinesh Rv
+ * @since 8/11/2022
  */
 @Entity
 @Table(name = "leave_records")
@@ -18,6 +21,7 @@ public class LeaveRecords {
     @GeneratedValue
     private int leaveRecordId;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
@@ -46,7 +50,7 @@ public class LeaveRecords {
         return leaveRecordId;
     }
 
-    public void setEmployeeId(Employee employee) {
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
@@ -105,7 +109,8 @@ public class LeaveRecords {
 
     @Override
     public String toString() {
-        return "\nLeave Reference Id :" + leaveRecordId 
+        return "\n Employee ID :"+employee.getEmployeeId()+
+                "\nLeave Reference Id :" + leaveRecordId
              + "\nLeave Type : " + leaveType 
              + "\nFrom :" + fromDate 
              + "\nTo : "+ toDate + "\n";

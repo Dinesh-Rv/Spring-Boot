@@ -1,9 +1,9 @@
 package com.ideas2it.service;
 
+import com.ideas2it.exception.NotFoundException;
 import com.ideas2it.model.Employee;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EmployeeService {
 
@@ -29,7 +29,7 @@ is added succesfully in the database
      *
      * @return details of all employee
      */
-    public List<Employee> getEmployees();
+    public List<Employee> getEmployees() throws NotFoundException;
 
     /**
      * <p>
@@ -41,19 +41,17 @@ is added succesfully in the database
      * @return a false boolean value if the update
 process is successfull
      */
-    public String updateEmployee(Employee employee);
+    public Employee saveEmployee(Employee employee);
 
     /**
      * <p>
      * Deletes an employee
      * <p>
-     * @param employee
-     *        contains an employee Object
      *
-     * @return a boolean to confirm if the employee is deleted successfully
-     *
+     * @param employee contains an employee object
+     * @return returns the employee object
      */
-    public String removeEmployee(Employee employee);
+    public int removeEmployee(Employee employee);
 
     /**
      * <p>
@@ -63,26 +61,6 @@ process is successfull
      * @param employeeId contains an employee Id to get details using id
      * @return Details of a single employee
      */
-    public Employee getEmployeeById(int employeeId);
-
-    /**
-     * <p>
-     *     checks if the user phone number
-     *     already exist in db
-     * </p>
-     * @param userPhoneNumber
-     * @return true if the userPhoneNumber is unique
-     */
-    public boolean isPhoneNumberValid(String userPhoneNumber);
-
-    /**
-     * <p>
-     *     checks if the user email
-     *     already exist in db
-     * </p>
-     * @param userEmail
-     * @return true if the userEmail is unique
-     */
-    public boolean isEmailValid(String userEmail);
+    public Employee getEmployeeById(int employeeId) throws NotFoundException;
 
 }

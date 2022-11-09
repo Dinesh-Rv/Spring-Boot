@@ -12,7 +12,7 @@ import java.util.List;
  * @author Dinesh Ravikumar
  * @since  at 04/11/2022
  */
-public interface EmployeeProjectsService {
+public interface ProjectsService {
     /**
      * <p>
      * This method gets all the received inputted elements as a object

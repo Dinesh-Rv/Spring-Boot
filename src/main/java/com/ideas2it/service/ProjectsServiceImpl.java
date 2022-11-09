@@ -2,19 +2,18 @@ package com.ideas2it.service;
 
 import com.ideas2it.model.Projects;
 import com.ideas2it.dao.EmployeeProjectsDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @Service
-public class EmployeeProjectsServiceImpl implements EmployeeProjectsService {
+public class ProjectsServiceImpl implements ProjectsService {
 
-    private final EmployeeProjectsDao employeeProjectsDao;
+    @Autowired
+    private EmployeeProjectsDao employeeProjectsDao;
 
-    public EmployeeProjectsServiceImpl(EmployeeProjectsDao employeeProjectsDao) {
-        this.employeeProjectsDao = employeeProjectsDao;
-    }
     public boolean addEmployeeProject(Projects record) {
         return true;//return employeeProjectsDao.addEmployeeProject(record);
     }

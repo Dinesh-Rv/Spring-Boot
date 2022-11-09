@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  */
 @ControllerAdvice
 @ResponseStatus
-public class EmployeeNotFoundExceptionHandler
+public class NotFoundExceptionHandler
         extends ResponseEntityExceptionHandler {
 
     /**
@@ -33,8 +33,8 @@ public class EmployeeNotFoundExceptionHandler
      *
      * @return the response message for exception with message
      */
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ExceptionMessage> employeeNotFoundException(EmployeeNotFoundException exception) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ExceptionMessage> employeeNotFoundException(NotFoundException exception) {
         ExceptionMessage message = new ExceptionMessage(HttpStatus.NOT_FOUND,
                 exception.getMessage());
 

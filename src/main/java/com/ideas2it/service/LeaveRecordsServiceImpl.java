@@ -1,64 +1,36 @@
 package com.ideas2it.service;
 
+import com.ideas2it.exception.NotFoundException;
 import com.ideas2it.model.LeaveRecords;
 import com.ideas2it.model.Employee;
 
 import com.ideas2it.dao.LeaveRecordsDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class LeaveRecordsServiceImpl implements LeaveRecordsService {
 
-    private final LeaveRecordsDao leaveRecordsDao;
+    @Autowired
+    private LeaveRecordsDao leaveRecordsDao;
 
-    public LeaveRecordsServiceImpl(LeaveRecordsDao leaveRecordsDao) {
-        this.leaveRecordsDao = leaveRecordsDao;
-    }
 
     @Override
-    public int addLeaveRecord(LeaveRecords record, Employee employee) {
-        return 2;
-        /*record.setEmployee(employee);
-        record.setCreatedAt(LocalDateTime.now().toString());
-        record.setModifiedAt(LocalDateTime.now().toString());
-        return leaveRecordsDao.addLeaveRecord(record);*/
-    }
+    public LeaveRecords insertLeaveRecord(LeaveRecords leaveRecords) {
+        leaveRecords.setCreatedAt(LocalDateTime.now().toString());
+        leaveRecords.setModifiedAt(LocalDateTime.now().toString());
+        return leaveRecordsDao.save(leaveRecords);
 
-    @Override
-    public List<LeaveRecords> getLeaveRecords(Employee employee) {
-        return null; //return leaveRecordsDao.getLeaveRecords(employee);
     }
-
     @Override
-    public String updateLeaveRecords(LeaveRecords leaveRecord) {
-        /*String processDetails;
-        if(leaveRecordsDao.updateLeaveRecords(leaveRecord) != 0) {
-            processDetails = "LeaveRecord has updated Successfully";
-        } else {
-            processDetails = "An error occurred";
+    public LeaveRecords getLeaveRecordById(int leaveRecordId) throws NotFoundException {
+        Optional<LeaveRecords> leaveRecord =leaveRecordsDao.findById(leaveRecordId);
+        if (leaveRecord.isEmpty()) {
+            throw new NotFoundException("LEAVE RECORD NOT FOUND");
         }
-        return processDetails;*/ return "kjump";
-    }
-
-    @Override
-    public LeaveRecords getLeaveRecordById(String userLeaveRecordId) {
-        /*LeaveRecords leaveRecord = null;
-        int leaveRecordId = 0;
-        try {
-            leaveRecordId = Integer.parseInt(userLeaveRecordId);
-            leaveRecord = leaveRecordsDao.getLeaveRecordById(leaveRecordId);
-        } catch (NumberFormatException ignored) {
-
-        }
-        return leaveRecord;*/
-        return null;
-    }
-   
-    @Override
-    public void removeEmployeeLeaveRecords(Employee employee) {
-        /*System.out.println("inside removing all leav rec");
-        leaveRecordsDao.removeEmployeeLeaveRecords(employee);*/
+        return leaveRecord.get();
     }
 }
