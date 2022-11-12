@@ -1,5 +1,6 @@
 package com.ideas2it.controller;
 
+import com.ideas2it.dto.EmployeeDto;
 import com.ideas2it.exception.NotFoundException;
 import com.ideas2it.model.Employee;
 import com.ideas2it.model.LeaveRecords;
@@ -37,14 +38,14 @@ public class EmployeeController {
      * <p>
      *     inserts an new employee
      * </p>
-     * @param employee
-     *        has a new employee object
+     * @param employeeDto
+     *        has a new employeeDto object
      *
      * @return the employee details recently added to the db
      */
     @PostMapping
-    public Employee insertEmployee(@RequestBody Employee employee) {
-       return employeeService.insertEmployee(employee);
+    public Employee insertEmployee(@RequestBody EmployeeDto employeeDto) {
+       return employeeService.insertEmployee(employeeDto);
     }
 
     /**
@@ -61,9 +62,8 @@ public class EmployeeController {
     @PostMapping(value = "leaveRecord/insert/{employeeId}")
     public LeaveRecords insertLeaveRecord(@RequestBody LeaveRecords leaveRecords,
                                           @PathVariable("employeeId") int employeeId) throws NotFoundException {
-        Employee employee = employeeService.getEmployeeById(employeeId);
-        leaveRecords.setEmployee(employee);
-        return leaveRecordsService.insertLeaveRecord(leaveRecords);
+        EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
+        return leaveRecordsService.insertLeaveRecord(leaveRecords, employeeDto);
     }
 
 
@@ -77,7 +77,7 @@ public class EmployeeController {
      *         Throws exception when there is no employee in the database
      */
     @GetMapping
-    public List<Employee> getEmployees() throws NotFoundException {
+    public List<EmployeeDto> getEmployees() throws NotFoundException {
         return employeeService.getEmployees();
     }
 
@@ -95,8 +95,8 @@ public class EmployeeController {
     @GetMapping("leaveRecords/getByEmployee/{employeeId}")
     public List<LeaveRecords> getLeaveRecordByEmployee(@PathVariable("employeeId") int employeeId)
             throws NotFoundException {
-        Employee employee = employeeService.getEmployeeById(employeeId);
-        return employee.getLeaveRecords();
+        EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
+        return leaveRecordsService.getLeaveRecordsByEmployee(employeeDto);
     }
 
     /**
@@ -110,7 +110,7 @@ public class EmployeeController {
      *         throws exception if the employee id doesn't hold a valid employee
      */
     @GetMapping("{employeeId}")
-    public Employee getEmployeeById(@PathVariable("employeeId") int employeeId)
+    public EmployeeDto getEmployeeById(@PathVariable("employeeId") int employeeId)
             throws NotFoundException {
         return employeeService.getEmployeeById(employeeId);
     }
@@ -154,9 +154,9 @@ public class EmployeeController {
      *
      * @return a string information about which id of an employee is deleted
      */
-    @PutMapping(value = "deleteEmployee/{employeeId}")
+    /*@PutMapping(value = "deleteEmployee/{employeeId}")
     public String deleteEmployee(@PathVariable("employeeId") int employeeId) throws NotFoundException {
         Employee employee = employeeService.getEmployeeById(employeeId);
         return employeeService.removeEmployee(employee) + " HAS BEEN DELETED SUCCESSFULLY";
-    }
+    }*/
 }

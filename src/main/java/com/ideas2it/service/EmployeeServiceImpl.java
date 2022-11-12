@@ -1,5 +1,7 @@
 package com.ideas2it.service;
 
+import com.ideas2it.converter.EmployeeConverter;
+import com.ideas2it.dto.EmployeeDto;
 import com.ideas2it.exception.NotFoundException;
 import com.ideas2it.model.Employee;
 import com.ideas2it.dao.EmployeeDao;
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,25 +21,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeDao employeeDao;
 
-    @Override
-    public Employee insertEmployee(Employee employee) {
-        employee.setCreatedAt(LocalDateTime.now().toString());
-        employee.setModifiedAt(LocalDateTime.now().toString());
+    @Autowired
+    private EmployeeConverter employeeConverter;
 
+    @Override
+    public Employee insertEmployee(EmployeeDto employeeDto) {
+        Employee employee = employeeConverter.dtoToEmployee(employeeDto);
         return employeeDao.save(employee);
     }
 
     @Override
-    public List<Employee> getEmployees() throws NotFoundException {
+    public List<EmployeeDto> getEmployees() throws NotFoundException {
         List<Employee> employees = employeeDao.findAll();
+        List<EmployeeDto> employeeDtos = new ArrayList<>();
         if (employees.isEmpty()) {
             throw new NotFoundException("NO EMPLOYEE PRESENT IN DATABASE");
         }
-        return employees;
+
+        for (Employee employee: employees) {
+            EmployeeDto employeeDto = employeeConverter.employeeToDto(employee);
+            employeeDtos.add(employeeDto);
+        }
+        return employeeDtos;
     }
 
     @Override
-    public Employee getEmployeeById(int employeeId) throws NotFoundException {
+    public EmployeeDto getEmployeeById(int employeeId) throws NotFoundException {
         Optional<Employee> employeeDetails = employeeDao.findById(employeeId);
         Employee employee;
         if (employeeDetails.isEmpty()) {
@@ -46,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 throw new NotFoundException("EMPLOYEE NOT FOUND");
             }
         }
-        return employee;
+        return employeeConverter.employeeToDto(employee);
     }
 
     @Override

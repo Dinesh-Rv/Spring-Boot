@@ -1,5 +1,6 @@
 package com.ideas2it.service;
 
+import com.ideas2it.dto.EmployeeDto;
 import com.ideas2it.exception.NotFoundException;
 import com.ideas2it.model.Employee;
 
@@ -13,14 +14,14 @@ public interface EmployeeService {
 from the controller and passes it to the dao addition of employee
      * </p>
      *
-     * @param employee
-     *        Details of an employee to be passed to the dao(i.e a new employee)
+     * @param employeeDto
+     *        Details of an employeeDto to be passed to the dao(i.e a new employee)
      *  
      * @return boolean element to confirm an employee
 is added succesfully in the database
      *                  
      */ 
-    public Employee insertEmployee(Employee employee);
+    public Employee insertEmployee(EmployeeDto employeeDto);
 
     /**
      * <p>
@@ -29,7 +30,7 @@ is added succesfully in the database
      *
      * @return details of all employee
      */
-    public List<Employee> getEmployees() throws NotFoundException;
+    public List<EmployeeDto> getEmployees() throws NotFoundException;
 
     /**
      * <p>
@@ -61,6 +62,6 @@ process is successfull
      * @param employeeId contains an employee Id to get details using id
      * @return Details of a single employee
      */
-    public Employee getEmployeeById(int employeeId) throws NotFoundException;
+    public EmployeeDto getEmployeeById(int employeeId) throws NotFoundException;
 
 }

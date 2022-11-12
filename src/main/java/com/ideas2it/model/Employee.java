@@ -43,7 +43,7 @@ public class Employee {
     @Column(name = "modified_at")
     private String modifiedAt;
     @Column(name = "deleted")
-    private int deleted=0;
+    private int deleted = 0;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY ,mappedBy = "employee", cascade = CascadeType.ALL)
@@ -55,33 +55,9 @@ public class Employee {
     public Employee () {
     }
 
-  
-
-    public Employee(String employeeName, 
+    public Employee(String employeeName,
                     String employeeRole,
-                    String employeeDepartment, 
-                    String employeePhoneNumber,
-                    String employeeDateOfBirth,
-                    String employeeGender,
-                    String employeeEmail,
-                    int employeeId,
-                    String createdAt,
-                    String modifiedAt) {
-        this.employeeName = employeeName;
-        this.employeeDepartment = employeeDepartment;
-        this.employeePhoneNumber = employeePhoneNumber;
-        this.employeeDateOfBirth = employeeDateOfBirth;
-        this.employeeEmail = employeeEmail;
-        this.employeeId = employeeId;
-        this.employeeRole = employeeRole;
-        this.employeeGender = employeeGender;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-    }
-
-    public Employee(String employeeName, 
-                    String employeeRole,
-                    String employeeDepartment, 
+                    String employeeDepartment,
                     String employeePhoneNumber,
                     String employeeDateOfBirth,
                     String employeeGender,

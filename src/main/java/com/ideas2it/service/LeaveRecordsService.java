@@ -1,5 +1,6 @@
 package com.ideas2it.service;
 
+import com.ideas2it.dto.EmployeeDto;
 import com.ideas2it.exception.NotFoundException;
 import com.ideas2it.model.LeaveRecords;
 import com.ideas2it.model.Employee;
@@ -20,7 +21,7 @@ from the controller for the leave record creation
 is added succesfully in the database
      *                  
      */ 
-    public LeaveRecords insertLeaveRecord(LeaveRecords leaveRecords);
+    public LeaveRecords insertLeaveRecord(LeaveRecords leaveRecords, EmployeeDto employeDto);
 
     /**
      * <p>
@@ -33,4 +34,15 @@ the leave record id
      * @return Leave Record object using id
      */
     public LeaveRecords getLeaveRecordById(int leaveRecordId) throws NotFoundException;
+
+    /**
+     * <p>
+     *     gets all the leave record of an employee
+     * </p>
+     * @param employeeDto
+     *        contains an employee dto object
+     *
+     * @return list of leave records
+     */
+    public List<LeaveRecords> getLeaveRecordsByEmployee(EmployeeDto employeeDto) throws NotFoundException;
 }
